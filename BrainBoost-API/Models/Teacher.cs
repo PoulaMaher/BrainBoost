@@ -4,6 +4,7 @@
     {
         public int NumOfCrs { get; set; }
         public int NumOfFollowers { get; set; }
+        public string PictureUrl { get; set; }
 
     }
 }

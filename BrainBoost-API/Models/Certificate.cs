@@ -10,8 +10,11 @@ namespace BrainBoost_API.Models
 
         [ForeignKey("Course")]
         public string CourseId { get; set; }
+        [ForeignKey("Student")]
+        public string StudentId { get; set; }
 
-        public Course Course { get; set; }
+        public Course? Course { get; set; }
+        public Student? Student { get; set; }
 
     }
 }
