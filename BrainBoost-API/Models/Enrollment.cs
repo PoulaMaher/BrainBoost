@@ -4,13 +4,13 @@ namespace BrainBoost_API.Models
 {
     public class Enrollment
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public bool IsActive { get; set; }
 
         [ForeignKey("Student")]
-        public Guid StudentId { get; set; }
+        public string StudentId { get; set; }
         [ForeignKey("Course")]
-        public Guid CourseId { get; set; }
+        public string CourseId { get; set; }
 
         // Additional properties
         public string? SubscribtionsStatus { get; set; }
