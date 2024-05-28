@@ -1,9 +1,13 @@
 
+using BrainBoost_API.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 namespace BrainBoost_API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] args)  
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,10 @@ namespace BrainBoost_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<ApplicationDbContext>(Options =>
+            {
+                Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ namespace BrainBoost_API.Models
     public class Review
     {
         public string Id { get; set; }
-        public string Content { get; set; }
+        public string? Content { get; set; }
         public int Rate { get; set; }
 
         [ForeignKey("Student")]

@@ -8,8 +8,8 @@ namespace BrainBoost_API.Models
         public string Content { get; set; }
 
         [ForeignKey("Question")]
-        public string QuestionId { get; set; }
+        public string? QuestionId { get; set; }
 
-        public Question Question { get; set; }
+        public Question? Question { get; set; }
     }
 }
