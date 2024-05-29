@@ -8,6 +8,7 @@ namespace BrainBoost_API.Models
         public int NumOfQuestions { get; set; }
         public int Degree { get; set; }
         public int MinDegree { get; set; }
+        public bool IsDeleted { get; set; } 
 
         [ForeignKey("Course")]
         public int CourseId { get; set; }

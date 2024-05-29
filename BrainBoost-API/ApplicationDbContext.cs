@@ -1,6 +1,7 @@
 ﻿using BrainBoost_API.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
 namespace BrainBoost_API
@@ -26,6 +27,9 @@ namespace BrainBoost_API
         public DbSet<Category> Categories { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<StudentEnrolledCourses> StudentEnrolledCourses { get; set; }
+        public DbSet<StudentSavedCourses> StudentSavedCourses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -35,18 +39,44 @@ namespace BrainBoost_API
             .WithOne(a => a.Question)
             .HasForeignKey(a => a.QuestionId);
 
-                builder.Entity<Question>()
-                .HasOne(q => q.TrueAnswer)
-                .WithMany()
-                .HasForeignKey(q => q.TrueAnswerId)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Course>()
-              .HasOne(e => e.Teacher)
-              .WithMany()
-              .HasForeignKey(e => e.TeacherId)
-               .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Question>()
+            .HasOne(q => q.TrueAnswer)
+            .WithMany()
+            .HasForeignKey(q => q.TrueAnswerId)
+            .OnDelete(DeleteBehavior.NoAction);
 
+            //////not returning
+           
+            foreach (var model in builder.Model.GetEntityTypes())
+            {
+                builder.Entity(model.Name).Property<bool>("IsDeleted").HasDefaultValue(false);
+               
+                
             }
+           
+            builder.Entity<Answer>().HasQueryFilter(e=>!e.IsDeleted);
+            builder.Entity<ApplicationRole>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<ApplicationUser>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Category>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Certificate>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Course>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Enrollment>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<FacebookUser>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Plan>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Question>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Quiz>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<QuizQuesitons>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Review>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Student>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<StudentEnrolledCourses>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<StudentSavedCourses>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<subscription>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Teacher>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Video>().HasQueryFilter(e => !e.IsDeleted);
+
+
+
+        }
 
 
     }
