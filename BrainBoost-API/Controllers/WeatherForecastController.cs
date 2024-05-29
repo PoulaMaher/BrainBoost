@@ -1,5 +1,6 @@
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrainBoost_API.Controllers
@@ -21,7 +22,7 @@ namespace BrainBoost_API.Controllers
             _logger = logger;
             this.unitOfWork = unitOfWork;
         }
-
+        [Authorize]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
