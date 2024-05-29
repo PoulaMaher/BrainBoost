@@ -502,9 +502,11 @@ namespace BrainBoost_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
@@ -697,11 +699,6 @@ namespace BrainBoost_API.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<string>("RoleId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -727,11 +724,6 @@ namespace BrainBoost_API.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -750,11 +742,6 @@ namespace BrainBoost_API.Migrations
 
                     b.Property<string>("ProviderKey")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -778,11 +765,6 @@ namespace BrainBoost_API.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
@@ -801,11 +783,6 @@ namespace BrainBoost_API.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
@@ -821,11 +798,6 @@ namespace BrainBoost_API.Migrations
 
                     b.Property<int>("QuizzesId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.HasKey("QuestionsId", "QuizzesId");
 
@@ -966,6 +938,15 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.Student", b =>
+                {
+                    b.HasOne("BrainBoost_API.Models.ApplicationUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.StudentEnrolledCourses", b =>
