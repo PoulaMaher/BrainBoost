@@ -23,6 +23,7 @@ namespace BrainBoost_API
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
             });
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
