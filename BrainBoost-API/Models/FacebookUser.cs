@@ -2,7 +2,7 @@
 {
     public class FacebookUser
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string FacebookUserId { get; set; }
         public string OriginalApplicationUserId { get; set; }
 

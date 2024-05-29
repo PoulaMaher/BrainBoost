@@ -1,15 +1,19 @@
-﻿namespace BrainBoost_API.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BrainBoost_API.Models
 {
     public class Student
     {
-
+        public int Id { get; set; }
         public int? NumOfCrsEnrolled { get; set; }
         public int? NumOfCertificates { get; set; }
         public int? NumOfCrsSaved { get; set; }
         public string PictureUrl { get; set; }
+        [ForeignKey("AppUser")]
+        public string UserId { get; set; }
 
 
-
+        public ApplicationUser? AppUser { get; set; }
         public List<Teacher>? FollowedTeachers { get; set; }
         public List<Course>? EnrolledCrs { get; set; }
         public List<Course>? SavedCrs { get; set; }

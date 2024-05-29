@@ -6,7 +6,7 @@ using BrainBoost_API.Repositories.Interfaces;
 
 namespace BrainBoost_API.Repositories.Inplementation
 {
-    public class UnitOfWork<T> : IUnitOfWork
+    public class UnitOfWork: IUnitOfWork
     {
         private readonly ApplicationDbContext Context;
         public IVideoRepository VideoRepository { get; private set; }
@@ -27,8 +27,25 @@ namespace BrainBoost_API.Repositories.Inplementation
         public UnitOfWork(ApplicationDbContext context)
         {
             this.Context = context;
+            VideoRepository = new VideoRepository(context);
+            QuizRepository = new QuizRepository(context);
+            StudentRepository = new StudentRepository(context);
+            CourseRepository = new CourseRepository(context);
+            TeacherRepository = new TeacherRepository(context);
+            ReviewRepository = new ReviewRepository(context);
+            SubscriptionRepository = new SubscriptionRepository(context);
+            FacebookUserRepository = new FacebookUserRepository(context);
+            PlanRepository = new PlanRepository(context);
+            EnrollmentRepository = new EnrollmentRepository(context);
+            CertificateRepository = new CertificateRepository(context);
+            CategoryRepository = new CategoryRepository(context);
+            AnswerRepository = new AnswerRepository(context);
+            QuestionRepository = new QuestionRepository(context);
         }
 
-        
+        public void save()
+        {
+            Context.SaveChanges();
+        }
     }
 }

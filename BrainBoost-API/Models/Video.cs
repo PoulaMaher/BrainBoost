@@ -9,9 +9,9 @@ namespace BrainBoost_API.Models
         public string? VideoUrl { get; set; }
 
         [ForeignKey("Course")]
-        public string CrsId { get; set; }
+        public int CrsId { get; set; }
         
 
-        public Course Course { get; set; }
+        public Course? Course { get; set; }
     }
 }

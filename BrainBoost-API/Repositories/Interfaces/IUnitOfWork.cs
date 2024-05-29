@@ -17,7 +17,8 @@ namespace BrainBoost_API.Repositories.Inplementation
         ICertificateRepository CertificateRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IAnswerRepository AnswerRepository { get; }
-        IQuestionRepository QuestionRepository { get; } 
+        IQuestionRepository QuestionRepository { get; }
+        void save();
 
     }
 }

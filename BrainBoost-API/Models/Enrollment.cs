@@ -8,9 +8,9 @@ namespace BrainBoost_API.Models
         public bool IsActive { get; set; }
 
         [ForeignKey("Student")]
-        public string StudentId { get; set; }
+        public int StudentId { get; set; }
         [ForeignKey("Course")]
-        public string CourseId { get; set; }
+        public int CourseId { get; set; }
 
         // Additional properties
         public string? SubscribtionsStatus { get; set; }

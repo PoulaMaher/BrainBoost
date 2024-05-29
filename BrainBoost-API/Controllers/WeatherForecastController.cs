@@ -1,3 +1,5 @@
+using BrainBoost_API.Models;
+using BrainBoost_API.Repositories.Inplementation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrainBoost_API.Controllers
@@ -12,10 +14,12 @@ namespace BrainBoost_API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IUnitOfWork unitOfWork;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -28,6 +32,11 @@ namespace BrainBoost_API.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpPost]
+        public IEnumerable<Video> Get2()
+        {
+            return unitOfWork.VideoRepository.GetAll().ToList();
         }
     }
 }
