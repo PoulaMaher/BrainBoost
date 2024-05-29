@@ -9,7 +9,7 @@ namespace BrainBoost_API.Models
         public string Content { get; set; }
         public QuestionType Type { get; set; }   // if zero -> True or False Question   , if one Multiple Choice Question
         public int Degree { get; set; }
-
+        public bool IsDeleted { get; set; } 
         [ForeignKey("TrueAnswer")]
         public int TrueAnswerId { get; set; }
 

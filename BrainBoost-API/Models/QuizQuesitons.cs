@@ -9,7 +9,7 @@ namespace BrainBoost_API.Models
         public int QuizId { get; set; }
         [ForeignKey("Question")]
         public int QuestionId { get; set; }
-
+        public bool IsDeleted { get; set; } 
         public Question? Question { get; set; }
         public Quiz? Quiz { get; set; }
     }

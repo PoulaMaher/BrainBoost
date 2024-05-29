@@ -4,5 +4,6 @@ namespace BrainBoost_API.Models
 {
     public class ApplicationRole : IdentityRole
     {
+        public bool IsDeleted { get; set; } 
     }
 }

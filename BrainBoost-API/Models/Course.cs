@@ -9,7 +9,7 @@ namespace BrainBoost_API.Models
         public string Description { get; set; }
         public int Price { get; set; }
         public int? Rate { get; set; }
-
+        public bool IsDeleted { get; set; } 
         [ForeignKey("Teacher")]
         public int TeacherId { get; set; }
         [ForeignKey("Category")]
@@ -20,7 +20,9 @@ namespace BrainBoost_API.Models
         public Certificate? Certificate { get; set; }
         public Teacher? Teacher { get; set; }
         public Category? Category { get; set; }
-         
+        public List<StudentEnrolledCourses>? EnrolledCourses { get; set; }
+        public List<StudentSavedCourses>? SavedCourses { get; set; }
+
 
 
     }
