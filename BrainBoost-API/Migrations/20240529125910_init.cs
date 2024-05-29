@@ -16,6 +16,7 @@ namespace BrainBoost_API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -30,6 +31,7 @@ namespace BrainBoost_API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -56,7 +58,8 @@ namespace BrainBoost_API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,8 +72,9 @@ namespace BrainBoost_API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FacebookUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OriginalApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FacebookUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OriginalApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,7 +89,8 @@ namespace BrainBoost_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Duration = table.Column<int>(type: "int", nullable: false)
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,7 +136,7 @@ namespace BrainBoost_API.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,7 +156,7 @@ namespace BrainBoost_API.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,13 +174,13 @@ namespace BrainBoost_API.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,7 +200,7 @@ namespace BrainBoost_API.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,8 +212,9 @@ namespace BrainBoost_API.Migrations
                     NumOfCrsEnrolled = table.Column<int>(type: "int", nullable: true),
                     NumOfCertificates = table.Column<int>(type: "int", nullable: true),
                     NumOfCrsSaved = table.Column<int>(type: "int", nullable: true),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,8 +223,7 @@ namespace BrainBoost_API.Migrations
                         name: "FK_Students_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -229,8 +234,9 @@ namespace BrainBoost_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumOfCrs = table.Column<int>(type: "int", nullable: false),
                     NumOfFollowers = table.Column<int>(type: "int", nullable: false),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -240,8 +246,7 @@ namespace BrainBoost_API.Migrations
                         name: "FK_Teachers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Teachers_Students_StudentId",
                         column: x => x.StudentId,
@@ -257,6 +262,7 @@ namespace BrainBoost_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     PlanId = table.Column<int>(type: "int", nullable: false),
                     SubscribtionsStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -287,8 +293,9 @@ namespace BrainBoost_API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: true)
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -304,6 +311,7 @@ namespace BrainBoost_API.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Degree = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     TrueAnswerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -313,8 +321,7 @@ namespace BrainBoost_API.Migrations
                         name: "FK_Questions_Answers_TrueAnswerId",
                         column: x => x.TrueAnswerId,
                         principalTable: "Answers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -323,8 +330,9 @@ namespace BrainBoost_API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Headline = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppreciationParagraph = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Headline = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppreciationParagraph = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -349,12 +357,10 @@ namespace BrainBoost_API.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    CertificateId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: true),
-                    StudentId1 = table.Column<int>(type: "int", nullable: true),
-                    TeacherId1 = table.Column<int>(type: "int", nullable: true)
+                    CertificateId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -364,33 +370,19 @@ namespace BrainBoost_API.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Courses_Certificates_CertificateId",
                         column: x => x.CertificateId,
                         principalTable: "Certificates",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Courses_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Courses_Students_StudentId1",
-                        column: x => x.StudentId1,
-                        principalTable: "Students",
-                        principalColumn: "Id");
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Courses_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Courses_Teachers_TeacherId1",
-                        column: x => x.TeacherId1,
-                        principalTable: "Teachers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -399,6 +391,7 @@ namespace BrainBoost_API.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     SubscribtionsStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -414,13 +407,13 @@ namespace BrainBoost_API.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Enrollments_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -432,6 +425,7 @@ namespace BrainBoost_API.Migrations
                     NumOfQuestions = table.Column<int>(type: "int", nullable: false),
                     Degree = table.Column<int>(type: "int", nullable: false),
                     MinDegree = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -453,6 +447,7 @@ namespace BrainBoost_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rate = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -464,9 +459,63 @@ namespace BrainBoost_API.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Reviews_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentEnrolledCourses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentEnrolledCourses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentEnrolledCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_StudentEnrolledCourses_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentSavedCourses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentSavedCourses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentSavedCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_StudentSavedCourses_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
@@ -477,9 +526,11 @@ namespace BrainBoost_API.Migrations
                 name: "Videos",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CrsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -582,24 +633,9 @@ namespace BrainBoost_API.Migrations
                 column: "CertificateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_StudentId",
-                table: "Courses",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_StudentId1",
-                table: "Courses",
-                column: "StudentId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Courses_TeacherId",
                 table: "Courses",
                 column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_TeacherId1",
-                table: "Courses",
-                column: "TeacherId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_CourseId",
@@ -637,9 +673,29 @@ namespace BrainBoost_API.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentEnrolledCourses_CourseId",
+                table: "StudentEnrolledCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentEnrolledCourses_StudentId",
+                table: "StudentEnrolledCourses",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
                 table: "Students",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSavedCourses_CourseId",
+                table: "StudentSavedCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSavedCourses_StudentId",
+                table: "StudentSavedCourses",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_PlanId",
@@ -679,7 +735,7 @@ namespace BrainBoost_API.Migrations
                 column: "CourseId",
                 principalTable: "Courses",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
@@ -727,6 +783,12 @@ namespace BrainBoost_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "StudentEnrolledCourses");
+
+            migrationBuilder.DropTable(
+                name: "StudentSavedCourses");
 
             migrationBuilder.DropTable(
                 name: "Subscriptions");

@@ -7,7 +7,7 @@ namespace BrainBoost_API.Models
         public int Id { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsActive { get; set; }
-
+        public bool IsDeleted { get; set; } 
         [ForeignKey("Teacher")]
         public int TeacherId { get; set; }
         [ForeignKey("Plan")]

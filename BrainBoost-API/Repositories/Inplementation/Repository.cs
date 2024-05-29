@@ -64,12 +64,14 @@ namespace BrainBoost_API.Repositories.Inplementation
 
        public void remove(T entity)
         {
-            DbSet.Remove(entity);
+            DbSet.Update(entity);
         }
 
        public  void removeRange(IEnumerable<T> entities)
         {
-            DbSet.RemoveRange(entities);
+          
+
+            DbSet.UpdateRange(entities);
         }
 
        

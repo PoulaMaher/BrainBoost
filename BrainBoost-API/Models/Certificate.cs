@@ -5,8 +5,9 @@ namespace BrainBoost_API.Models
     public class Certificate
     {
         public int Id { get; set; }
-        public string Headline { get; set; }
-        public string AppreciationParagraph { get; set; }
+        public string? Headline { get; set; }
+        public string? AppreciationParagraph { get; set; }
+        public bool IsDeleted { get; set; } 
 
         [ForeignKey("Course")]
         public int CourseId { get; set; }
