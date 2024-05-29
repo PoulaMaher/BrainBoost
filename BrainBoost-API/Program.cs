@@ -1,5 +1,6 @@
 
 using BrainBoost_API.Models;
+using BrainBoost_API.Repositories.Inplementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -17,7 +18,7 @@ namespace BrainBoost_API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddDbContext<ApplicationDbContext>(Options =>
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));

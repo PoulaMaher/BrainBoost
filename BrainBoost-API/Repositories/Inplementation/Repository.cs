@@ -16,17 +16,17 @@ namespace BrainBoost_API.Repositories.Inplementation
             this.DbSet = Context.Set<T>();
         }
 
-        void IRepository<T>.add(T entity)
+       public void add(T entity)
         {
             DbSet.Add(entity);
         }
 
-        T IRepository<T>.Get(Expression<Func<T, bool>> filter, string? includeProps)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProps)
         {
             IQueryable<T> query = DbSet;
             if (!string.IsNullOrEmpty(includeProps))
             {
-                foreach(var includeProp in includeProps.Split(new char[] { , } , StringSplitOptions.RemoveEmptyEntries))
+                foreach(var includeProp in includeProps.Split(new char[] { ',' } , StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
@@ -34,7 +34,7 @@ namespace BrainBoost_API.Repositories.Inplementation
             return query.FirstOrDefault();
         }
 
-        IEnumerable<T> IRepository<T>.GetAll(string? includeProps)
+        public IEnumerable<T> GetAll(string? includeProps)
         {
             IQueryable<T> query = DbSet;
 
@@ -48,7 +48,7 @@ namespace BrainBoost_API.Repositories.Inplementation
             return query.ToList();
         }
 
-        IEnumerable<T> IRepository<T>.GetList(Expression<Func<T, bool>> filter, string? includeProps)
+        public IEnumerable<T> GetList(Expression<Func<T, bool>> filter, string? includeProps)
         {
             IQueryable<T> query = DbSet;
             query = query.Where(filter);
@@ -62,22 +62,19 @@ namespace BrainBoost_API.Repositories.Inplementation
             return query.ToList();
         }
 
-        void IRepository<T>.remove(T entity)
+       public void remove(T entity)
         {
             DbSet.Remove(entity);
         }
 
-        void IRepository<T>.removeRange(IEnumerable<T> entities)
+       public  void removeRange(IEnumerable<T> entities)
         {
             DbSet.RemoveRange(entities);
         }
 
-        void IRepository<T>.save()
-        {
-            Context.SaveChanges();
-        }
+       
 
-        void IRepository<T>.update(T entity)
+         public void update(T entity)
         {
             DbSet.Update(entity);
 
