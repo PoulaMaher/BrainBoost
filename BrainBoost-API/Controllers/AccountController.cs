@@ -98,7 +98,7 @@ namespace BrainBoost_API.Controllers
                     {
                         List<Claim> userClaims = new List<Claim>();
                         userClaims.Add(new Claim(ClaimTypes.Name, userFromDb.UserName));
-                        userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userFromDb.UserName));
+                        userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userFromDb.Id));
                         userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
                         var roles = await UserManager.GetRolesAsync(userFromDb);
                         foreach (var role in roles)
@@ -110,8 +110,8 @@ namespace BrainBoost_API.Controllers
 
                         //create Token
                         JwtSecurityToken token = new JwtSecurityToken(
-                            issuer: Configuration["JWT:ValidIssuer"],//Provider
-                            audience: Configuration["JWT:ValidAudience"],//consumer url
+                            issuer: Configuration["JWT:ValidIssuer"],
+                            audience: Configuration["JWT:ValidAudience"],
                             expires: DateTime.Now.AddHours(1),
                             signingCredentials: signingCredentials,
                             claims: userClaims
