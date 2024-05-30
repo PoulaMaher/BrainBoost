@@ -13,7 +13,6 @@ namespace BrainBoost_API.Models
         [ForeignKey("AppUser")]
         public string? UserId { get; set; }
         public bool IsDeleted { get; set; } = false;
-
         public ApplicationUser ?AppUser { get; set; }
         public List<Course>? Crs { get; set; }
     }
