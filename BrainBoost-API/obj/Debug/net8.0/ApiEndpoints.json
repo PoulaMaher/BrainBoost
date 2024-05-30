@@ -74,22 +74,6 @@
   },
   {
     "ContainingType": "BrainBoost_API.Controllers.TeacherController",
-    "Method": "GetCoursesForTeacher",
-    "RelativePath": "api/Teacher",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "TeacherId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BrainBoost_API.Controllers.TeacherController",
     "Method": "GetTeacherById",
     "RelativePath": "api/Teacher/{id}",
     "HttpMethod": "GET",
@@ -100,6 +84,22 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BrainBoost_API.Controllers.TeacherController",
+    "Method": "GetCoursesForTeacher",
+    "RelativePath": "api/Teacher/GetCoursesOfTeacherById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "TeacherId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
