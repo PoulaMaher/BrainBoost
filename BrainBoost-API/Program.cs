@@ -45,6 +45,12 @@ namespace BrainBoost_API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
                 };
             });
+            builder.Services.AddCors(options => {
+                options.AddPolicy("MyPolicy",
+                                  policy => policy.AllowAnyMethod()
+                                  .AllowAnyOrigin()
+                                  .AllowAnyHeader());
+            });
             //swagger
             builder.Services.AddSwaggerGen(swagger =>
             {
@@ -88,6 +94,7 @@ namespace BrainBoost_API
                 app.UseSwaggerUI();
             }
             app.UseAuthorization();
+            app.UseCors("MyPolicy");
             app.MapControllers();
             app.Run();
         }
