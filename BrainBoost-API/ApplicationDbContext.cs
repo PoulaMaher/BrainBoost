@@ -8,11 +8,7 @@
     {
         public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
         {
-            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-            {
-
-            
-            }
+            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
             public DbSet<Video> Videos { get; set; }
             public DbSet<Quiz> Quizzes { get; set; }
             public DbSet<Student> Students { get; set; }
@@ -29,8 +25,6 @@
             public DbSet<Question> Questions { get; set; }
             public DbSet<StudentEnrolledCourses> StudentEnrolledCourses { get; set; }
             public DbSet<StudentSavedCourses> StudentSavedCourses { get; set; }
-
-
             protected override void OnModelCreating(ModelBuilder builder)
             {
                 base.OnModelCreating(builder);
@@ -38,13 +32,11 @@
                 .HasMany(q => q.Answers)
                 .WithOne(a => a.Question)
                 .HasForeignKey(a => a.QuestionId);
-
                 builder.Entity<Question>()
                 .HasOne(q => q.TrueAnswer)
                 .WithMany()
                 .HasForeignKey(q => q.TrueAnswerId)
                 .OnDelete(DeleteBehavior.NoAction);
-
             //////not returning
 
             //foreach (var model in builder.Model.GetEntityTypes())
@@ -53,9 +45,6 @@
 
 
             //}
-
-
-
             foreach (var model in builder.Model.GetEntityTypes())
             {
                 var isDeletedProperty = model.FindProperty("IsDeleted");
@@ -64,7 +53,6 @@
                     isDeletedProperty.SetDefaultValue(false);
                 }
             }
-
             builder.Entity<Answer>().HasQueryFilter(e=>!e.IsDeleted);
                 builder.Entity<ApplicationRole>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<ApplicationUser>().HasQueryFilter(e => !e.IsDeleted);
@@ -84,11 +72,6 @@
                 builder.Entity<subscription>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Teacher>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Video>().HasQueryFilter(e => !e.IsDeleted);
-
-
-
             }
-
-
         }
     }
