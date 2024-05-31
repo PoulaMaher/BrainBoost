@@ -1,6 +1,9 @@
 
+using AutoMapper;
+using BrainBoost_API.Mapper;
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
+using HelperPlan.DTO.Paylink;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +26,7 @@ namespace BrainBoost_API
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
             builder.Services.AddDbContext<ApplicationDbContext>(Options =>
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
@@ -51,6 +55,11 @@ namespace BrainBoost_API
                                   .AllowAnyOrigin()
                                   .AllowAnyHeader());
             });
+
+            //get section pay link from appsettings.json
+            builder.Services.Configure<EnvironmentPaylink>(builder.Configuration.GetSection("Paylink"));
+
+
             //swagger
             builder.Services.AddSwaggerGen(swagger =>
             {

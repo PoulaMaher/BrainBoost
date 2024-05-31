@@ -52,7 +52,7 @@ namespace BrainBoost_API.Controllers
         // create subscription
 
         [HttpPost("Create")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Create(SubscriptionDto subscriptionDto)
         {
             if (ModelState.IsValid)
