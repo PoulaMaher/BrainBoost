@@ -21,6 +21,5 @@ namespace BrainBoost_API.Models
         public List<StudentEnrolledCourses>? EnrolledCourses { get; set; }
         public List<StudentSavedCourses>? SavedCourses { get; set; }
         public List<Certificate>? Certificates { get; set; }
-
     }
 }

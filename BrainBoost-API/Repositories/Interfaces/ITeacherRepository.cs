@@ -5,5 +5,7 @@ namespace BrainBoost_API.Repositories.Interfaces
 {
     public interface ITeacherRepository : IRepository<Teacher>
     {
+        Teacher GetTeacherById(int id);
+        List<Course> GetCoursesForTeacher(int TeacherId);
     }
 }

@@ -16,19 +16,17 @@ namespace BrainBoost_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddDbContext<ApplicationDbContext>(Options =>
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
             });
-
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddAuthentication(options =>
             {
@@ -47,7 +45,12 @@ namespace BrainBoost_API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
                 };
             });
-
+            builder.Services.AddCors(options => {
+                options.AddPolicy("MyPolicy",
+                                  policy => policy.AllowAnyMethod()
+                                  .AllowAnyOrigin()
+                                  .AllowAnyHeader());
+            });
             //swagger
             builder.Services.AddSwaggerGen(swagger =>
             {
@@ -58,7 +61,6 @@ namespace BrainBoost_API
                     //Title = "",
                     //Description = ""
                 });
-
                 // To Enable authorization using Swagger (JWT)    
                 swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
@@ -84,23 +86,16 @@ namespace BrainBoost_API
                     }
                     });
             });
-
-
-
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseAuthorization();
-
-
+            app.UseCors("MyPolicy");
             app.MapControllers();
-
             app.Run();
         }
     }
