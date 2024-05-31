@@ -19,7 +19,6 @@ namespace BrainBoost_API.Repositories.Inplementation
         public IFacebookUserRepository FacebookUserRepository { get; private set; }
         public IPlanRepository PlanRepository { get; private set; }
         public IEnrollmentRepository EnrollmentRepository { get; private set; }
-        public ICertificateRepository CertificateRepository { get; private set; }
         public ICategoryRepository CategoryRepository { get; private set; }
         public IAnswerRepository AnswerRepository { get; private set; }
         public IQuestionRepository QuestionRepository { get; private set; }
@@ -37,7 +36,6 @@ namespace BrainBoost_API.Repositories.Inplementation
             FacebookUserRepository = new FacebookUserRepository(context);
             PlanRepository = new PlanRepository(context);
             EnrollmentRepository = new EnrollmentRepository(context);
-            CertificateRepository = new CertificateRepository(context);
             CategoryRepository = new CategoryRepository(context);
             AnswerRepository = new AnswerRepository(context);
             QuestionRepository = new QuestionRepository(context);

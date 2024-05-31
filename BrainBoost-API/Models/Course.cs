@@ -14,10 +14,10 @@ namespace BrainBoost_API.Models
         public int TeacherId { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        [ForeignKey("Certificate")]
-        public int CertificateId { get; set; }
+        public string? CertificateHeadline { get; set; }
+        public string? CertificateAppreciationParagraph { get; set; }
 
-        public Certificate? Certificate { get; set; }
+
         public Teacher? Teacher { get; set; }
         public Category? Category { get; set; }
         public List<StudentEnrolledCourses>? EnrolledCourses { get; set; }

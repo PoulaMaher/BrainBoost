@@ -19,7 +19,6 @@
             public DbSet<FacebookUser> FacebookUsers { get; set; }
             public DbSet<Plan> Plans { get; set; }
             public DbSet<Enrollment> Enrollments { get; set; }
-            public DbSet<Certificate> Certificates { get; set; }
             public DbSet<Category> Categories { get; set; }
             public DbSet<Answer> Answers { get; set; }
             public DbSet<Question> Questions { get; set; }
@@ -57,7 +56,6 @@
                 builder.Entity<ApplicationRole>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<ApplicationUser>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Category>().HasQueryFilter(e => !e.IsDeleted);
-                builder.Entity<Certificate>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Course>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Enrollment>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<FacebookUser>().HasQueryFilter(e => !e.IsDeleted);
