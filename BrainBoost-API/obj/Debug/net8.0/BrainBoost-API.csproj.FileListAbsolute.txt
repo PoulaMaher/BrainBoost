@@ -577,3 +577,8 @@ D:\source\repos\BrainBoost-API\BrainBoost-API\obj\Debug\net8.0\refint\BrainBoost
 D:\source\repos\BrainBoost-API\BrainBoost-API\obj\Debug\net8.0\BrainBoost-API.pdb
 D:\source\repos\BrainBoost-API\BrainBoost-API\obj\Debug\net8.0\BrainBoost-API.genruntimeconfig.cache
 D:\source\repos\BrainBoost-API\BrainBoost-API\obj\Debug\net8.0\ref\BrainBoost-API.dll
+E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\AutoMapper.dll
+E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.dll
+E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.Serializers.NewtonsoftJson.dll
