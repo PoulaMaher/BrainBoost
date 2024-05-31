@@ -5,8 +5,6 @@ namespace BrainBoost_API.Models
     public class Student
     {
         public int Id { get; set; }
-        public string? Fname { get; set; }
-        public string? Lname { get; set; }
 
         public int? NumOfCrsEnrolled { get; set; }
         public int? NumOfCertificates { get; set; }

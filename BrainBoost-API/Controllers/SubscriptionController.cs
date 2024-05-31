@@ -35,21 +35,21 @@ namespace BrainBoost_API.Controllers
             this.paylink = paylink.Value;
             this.mapper = mapper;
         }
-        //get sub
-        [HttpGet("getstatus")]
-        public IActionResult GetSub()
+        //Check Subscription Status if it Active Or Not
+        [HttpGet("GetStatus")]
+        public IActionResult GetSubscriptionStatus()
         {
-            int UserID = int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int TeacherId = int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            var subscribe = this.unitOfWork.SubscriptionRepository.Get(c => c.TeacherId == UserID);
-            if (subscribe != null)
+            var subscription = this.unitOfWork.SubscriptionRepository.Get(c => c.TeacherId == TeacherId);
+            if (subscription != null)
             {
-                return Ok(new { IsActive = subscribe.IsActive });
+                return Ok(new { IsActive = subscription.IsActive });
             }
             return Ok(new { IsActive = false });
         }
 
-        // create subscribtion
+        // create subscription
 
         [HttpPost("Create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -59,10 +59,9 @@ namespace BrainBoost_API.Controllers
             {
 
                 subscriptionDto.TeacherId = int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                subscriptionDto.TeacherId = subscriptionDto.TeacherId;
                 var orderNumber = Guid.NewGuid().ToString();
 
-                var result = await GenratePaylink(await AuthenticationPaylink(), subscriptionDto, orderNumber);
+                var result = await GeneratePaylink(await AuthenticationPaylink(), subscriptionDto, orderNumber);
 
                 var subscribtion = mapper.Map<subscription>(subscriptionDto);
                 subscribtion.SubscribtionsStatus = result.OrderStatus;
@@ -152,11 +151,11 @@ namespace BrainBoost_API.Controllers
 
         [NonAction]
         // genrate paylink
-        public async Task<GatewayOrderResponse> GenratePaylink(string token, SubscriptionDto subscribtionDto, string orderNumber)
+        public async Task<GatewayOrderResponse> GeneratePaylink(string token, SubscriptionDto subscribtionDto, string orderNumber)
         {
 
-            var UserId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userinfo = await user.FindByIdAsync(UserId);
+            var teacherId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var teacherInfo = await user.FindByIdAsync(teacherId);
             // _unitOfWork.EmployeerRepository.Get(x => x.Id == subscribtionDto.EmployerID);
 
             var plan = this.unitOfWork.PlanRepository.Get(x => x.Id == subscribtionDto.PlanId);
@@ -172,10 +171,10 @@ namespace BrainBoost_API.Controllers
             {
 
                 amount = plan.Price, //100.0,
-                clientMobile = userinfo.PhoneNumber,//"0512345678",
-                clientName = string.Format("{0} {1}", userinfo.UserName, userinfo.UserName),
+                clientMobile = teacherInfo.PhoneNumber,//"0512345678",
+                clientName = string.Format("{0} {1}", teacherInfo.Fname, teacherInfo.Lname),
                 //"Mohammed Ali",
-                clientEmail = userinfo.Email,//"mohammed@test.com",
+                clientEmail = teacherInfo.Email,//"mohammed@test.com",
 
                 orderNumber = orderNumber,// "123456789",
 
