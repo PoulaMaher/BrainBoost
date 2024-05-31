@@ -69,8 +69,6 @@ namespace BrainBoost_API.Repositories.Inplementation
 
        public  void removeRange(IEnumerable<T> entities)
         {
-          
-
             DbSet.UpdateRange(entities);
         }
 
