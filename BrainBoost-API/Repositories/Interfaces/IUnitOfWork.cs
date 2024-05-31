@@ -14,7 +14,6 @@ namespace BrainBoost_API.Repositories.Inplementation
         IFacebookUserRepository FacebookUserRepository { get; }
         IPlanRepository PlanRepository { get; }
         IEnrollmentRepository EnrollmentRepository { get; }
-        ICertificateRepository CertificateRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IAnswerRepository AnswerRepository { get; }
         IQuestionRepository QuestionRepository { get; }
