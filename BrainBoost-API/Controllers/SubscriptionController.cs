@@ -58,7 +58,7 @@ namespace BrainBoost_API.Controllers
             if (ModelState.IsValid)
             {
 
-                subscriptionDto.TeacherId = int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                subscriptionDto.TeacherId = 1;//int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var orderNumber = Guid.NewGuid().ToString();
 
                 var result = await GeneratePaylink(await AuthenticationPaylink(), subscriptionDto, orderNumber);
@@ -154,11 +154,11 @@ namespace BrainBoost_API.Controllers
         public async Task<GatewayOrderResponse> GeneratePaylink(string token, SubscriptionDto subscribtionDto, string orderNumber)
         {
 
-            var teacherId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            /*var teacherId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var teacherInfo = await user.FindByIdAsync(teacherId);
             // _unitOfWork.EmployeerRepository.Get(x => x.Id == subscribtionDto.EmployerID);
 
-            var plan = this.unitOfWork.PlanRepository.Get(x => x.Id == subscribtionDto.PlanId);
+            var plan = this.unitOfWork.PlanRepository.Get(x => x.Id == subscribtionDto.PlanId);*/
 
             var options = new RestClientOptions(this.paylink.url + "/api/addInvoice");
             var client = new RestClient(options);
@@ -170,13 +170,13 @@ namespace BrainBoost_API.Controllers
             request.AddJsonBody(new
             {
 
-                amount = plan.Price, //100.0,
-                clientMobile = teacherInfo.PhoneNumber,//"0512345678",
-                clientName = string.Format("{0} {1}", teacherInfo.Fname, teacherInfo.Lname),
+                amount = 100,//plan.Price, //100.0,
+                clientMobile = 05156325333,// teacherInfo.PhoneNumber,//"0512345678",
+                clientName = "poula",//string.Format("{0} {1}", teacherInfo.Fname, teacherInfo.Lname),
                 //"Mohammed Ali",
-                clientEmail = teacherInfo.Email,//"mohammed@test.com",
+                clientEmail = "poual@gmail.com",//teacherInfo.Email,//"mohammed@test.com",
 
-                orderNumber = orderNumber,// "123456789",
+                orderNumber = "1236566256",//orderNumber,// "123456789",
 
 
                 callBackUrl = $"http://localhost:4200/success/{orderNumber}",
@@ -189,8 +189,8 @@ namespace BrainBoost_API.Controllers
                     new
                     {
 
-                        title = plan.Name,//"test",
-                        price =plan.Price,//100.0,
+                        title = "test",//plan.Name,//"test",
+                        price =100.0,//plan.Price,//100.0,
                         qty = 1,
                         imageSrc = "",
                         description = "",
