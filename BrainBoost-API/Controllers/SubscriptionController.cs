@@ -57,6 +57,7 @@ namespace BrainBoost_API.Controllers
         {
             if (ModelState.IsValid)
             {
+                HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 subscriptionDto.TeacherId = 1;//int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var orderNumber = Guid.NewGuid().ToString();
@@ -69,7 +70,7 @@ namespace BrainBoost_API.Controllers
                 subscribtion.CheckUrl = result.CheckUrl;
                 subscribtion.orderNumber = orderNumber;
                 this.unitOfWork.SubscriptionRepository.add(subscribtion);
-                this.unitOfWork.save();
+                //this.unitOfWork.save();
                 return Ok(new { Url = result.Url });
 
             }
@@ -116,7 +117,7 @@ namespace BrainBoost_API.Controllers
             }
 
             this.unitOfWork.SubscriptionRepository.update(subscribtion);
-            this.unitOfWork.save();
+            //this.unitOfWork.save();
             return Ok(result);
         }
 
