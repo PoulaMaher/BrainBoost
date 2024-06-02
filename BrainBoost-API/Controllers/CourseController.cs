@@ -1,4 +1,5 @@
 ﻿using BrainBoost_API.DTOs.Account;
+using BrainBoost_API.DTOs.Course;
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,25 @@ namespace BrainBoost_API.Controllers
             {
                 List<Course> Courses = UnitOfWork.CourseRepository.GetAll().ToList();
                 return Ok(Courses);
+            }
+            return BadRequest(ModelState);
+        }
+        [HttpGet("GetCourse/{id:int}")]
+        public async Task<IActionResult> GetCourseDetails(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                Course Course = UnitOfWork.CourseRepository.Get(c=>c.Id==id, "Teacher,WhatToLearn");
+                var review=UnitOfWork.ReviewRepository.GetList(r=>r.CourseId==id).ToList();
+                if(review.Count()>4)
+                {
+                     review = UnitOfWork.ReviewRepository.GetList(r => r.CourseId == id).Take(4).ToList();
+                }
+               
+                CourseDetails crsDetails = UnitOfWork.CourseRepository.getCrsDetails(Course, review);
+
+
+                return Ok(crsDetails);
             }
             return BadRequest(ModelState);
         }

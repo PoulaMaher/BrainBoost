@@ -22,6 +22,8 @@
             public DbSet<Category> Categories { get; set; }
             public DbSet<Answer> Answers { get; set; }
             public DbSet<Question> Questions { get; set; }
+            public DbSet<WhatToLearn> WhatToLearn { get; set; }
+
             public DbSet<StudentEnrolledCourses> StudentEnrolledCourses { get; set; }
             public DbSet<StudentSavedCourses> StudentSavedCourses { get; set; }
             protected override void OnModelCreating(ModelBuilder builder)
@@ -70,6 +72,8 @@
                 builder.Entity<subscription>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Teacher>().HasQueryFilter(e => !e.IsDeleted);
                 builder.Entity<Video>().HasQueryFilter(e => !e.IsDeleted);
-            }
+                builder.Entity<WhatToLearn>().HasQueryFilter(e => !e.IsDeleted);
+
         }
+    }
     }
