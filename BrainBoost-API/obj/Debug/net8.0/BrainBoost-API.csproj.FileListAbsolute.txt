@@ -587,3 +587,4 @@ F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\Newtonsoft.Json.dll
 F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.dll
 F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.Serializers.NewtonsoftJson.dll
 F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\BrainBoost-API.staticwebassets.runtime.json
+E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\BrainBoost-API.staticwebassets.runtime.json
