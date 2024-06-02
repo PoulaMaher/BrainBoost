@@ -24,6 +24,7 @@ namespace BrainBoost_API.Repositories.Inplementation
         public T Get(Expression<Func<T, bool>> filter, string? includeProps)
         {
             IQueryable<T> query = DbSet;
+            query=query.Where(filter);
             if (!string.IsNullOrEmpty(includeProps))
             {
                 foreach(var includeProp in includeProps.Split(new char[] { ',' } , StringSplitOptions.RemoveEmptyEntries))

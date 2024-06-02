@@ -9,6 +9,8 @@ namespace BrainBoost_API.Models
         public int? NumOfCrsEnrolled { get; set; }
         public int? NumOfCertificates { get; set; }
         public int? NumOfCrsSaved { get; set; }
+        public string? Fname { get; set; }
+        public string? Lname { get; set; }
         public string? PictureUrl { get; set; }
         [ForeignKey("AppUser")]
         public string? UserId { get; set; }

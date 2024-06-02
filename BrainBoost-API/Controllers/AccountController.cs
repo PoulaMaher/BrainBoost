@@ -57,6 +57,8 @@ namespace BrainBoost_API.Controllers
                             var student = new Student
                             {
                                 AppUser = user,
+                                Fname= registerUser.FirstName,
+                                Lname= registerUser.LastName,
 
                             };
 
@@ -67,6 +69,8 @@ namespace BrainBoost_API.Controllers
                             var teacher = new Teacher
                             {
                                 AppUser = user,
+                                Fname = registerUser.FirstName,
+                                Lname = registerUser.LastName,
 
                             };
                             this.UnitOfWork.TeacherRepository.add(teacher);

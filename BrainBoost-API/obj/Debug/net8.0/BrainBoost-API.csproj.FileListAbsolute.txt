@@ -581,3 +581,9 @@ E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\n
 E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\Newtonsoft.Json.dll
 E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.dll
 E:\ITI\ITI Projects\Graduation Project\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.Serializers.NewtonsoftJson.dll
+F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\AutoMapper.dll
+F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\Newtonsoft.Json.dll
+F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.dll
+F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\RestSharp.Serializers.NewtonsoftJson.dll
+F:\BrainBoost\BrainBoost-API\BrainBoost-API\bin\Debug\net8.0\BrainBoost-API.staticwebassets.runtime.json
