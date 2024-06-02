@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BrainBoost_API.DTOs.Course;
 using BrainBoost_API.DTOs.Review;
+using BrainBoost_API.DTOs.Enrollment;
 using BrainBoost_API.DTOs.Subscription;
 using BrainBoost_API.Models;
 
@@ -14,9 +15,7 @@ namespace BrainBoost_API.Mapper
             CreateMap<CourseDetails, Course>().ReverseMap();
             CreateMap<ReviewDTO, Review>().ReverseMap();
             CreateMap<WhatToLearnDTO, WhatToLearn>().ReverseMap();
-
-
-
+            CreateMap<EnrollmentDto, Enrollment>().ReverseMap();
 
         }
     }

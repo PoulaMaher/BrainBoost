@@ -23,6 +23,7 @@ namespace BrainBoost_API.Repositories.Inplementation
         public ICategoryRepository CategoryRepository { get; private set; }
         public IAnswerRepository AnswerRepository { get; private set; }
         public IQuestionRepository QuestionRepository { get; private set; }
+        public IStudentEnrolledCoursesRepository StudentEnrolledCoursesRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context,IMapper mapper)
         {
@@ -40,6 +41,7 @@ namespace BrainBoost_API.Repositories.Inplementation
             CategoryRepository = new CategoryRepository(context);
             AnswerRepository = new AnswerRepository(context);
             QuestionRepository = new QuestionRepository(context);
+            StudentEnrolledCoursesRepository = new StudentEnrolledCoursesRepository(context);
         }
 
         public void save()

@@ -10,7 +10,7 @@ namespace BrainBoost_API.Models
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }
-        public bool IsDeleted { get; set; } 
+        public bool IsDeleted { get; set; } = false; 
         public Student? Student { get; set; }
 
         [ForeignKey("Course")]
