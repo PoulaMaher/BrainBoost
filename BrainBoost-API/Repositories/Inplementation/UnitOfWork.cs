@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using BrainBoost_API.Repositories.Interfaces;
+using AutoMapper;
 
 namespace BrainBoost_API.Repositories.Inplementation
 {
@@ -24,13 +25,13 @@ namespace BrainBoost_API.Repositories.Inplementation
         public IQuestionRepository QuestionRepository { get; private set; }
         public IStudentEnrolledCoursesRepository StudentEnrolledCoursesRepository { get; private set; }
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(ApplicationDbContext context,IMapper mapper)
         {
             this.Context = context;
             VideoRepository = new VideoRepository(context);
             QuizRepository = new QuizRepository(context);
             StudentRepository = new StudentRepository(context);
-            CourseRepository = new CourseRepository(context);
+            CourseRepository = new CourseRepository(context,mapper);
             TeacherRepository = new TeacherRepository(context);
             ReviewRepository = new ReviewRepository(context);
             SubscriptionRepository = new SubscriptionRepository(context);

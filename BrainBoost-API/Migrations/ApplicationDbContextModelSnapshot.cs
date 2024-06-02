@@ -17,7 +17,7 @@ namespace BrainBoost_API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -196,7 +196,6 @@ namespace BrainBoost_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -205,7 +204,6 @@ namespace BrainBoost_API.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")
@@ -216,6 +214,9 @@ namespace BrainBoost_API.Migrations
 
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
+
+                    b.Property<string>("photoUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -451,10 +452,16 @@ namespace BrainBoost_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Fname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
+
+                    b.Property<string>("Lname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("NumOfCertificates")
                         .HasColumnType("int");
@@ -542,10 +549,16 @@ namespace BrainBoost_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Fname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
+
+                    b.Property<string>("Lname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumOfCrs")
                         .HasColumnType("int");
@@ -598,6 +611,32 @@ namespace BrainBoost_API.Migrations
                     b.HasIndex("CrsId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.WhatToLearn", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CrsId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CrsId");
+
+                    b.ToTable("WhatToLearn");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.subscription", b =>
@@ -945,6 +984,17 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("BrainBoost_API.Models.WhatToLearn", b =>
+                {
+                    b.HasOne("BrainBoost_API.Models.Course", "course")
+                        .WithMany("WhatToLearn")
+                        .HasForeignKey("CrsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("course");
+                });
+
             modelBuilder.Entity("BrainBoost_API.Models.subscription", b =>
                 {
                     b.HasOne("BrainBoost_API.Models.Plan", "Plan")
@@ -1040,6 +1090,8 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("EnrolledCourses");
 
                     b.Navigation("SavedCourses");
+
+                    b.Navigation("WhatToLearn");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.Question", b =>
