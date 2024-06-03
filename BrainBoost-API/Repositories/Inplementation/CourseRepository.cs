@@ -2,6 +2,7 @@
 using BrainBoost_API.DTOs.Course;
 using BrainBoost_API.DTOs.Review;
 using BrainBoost_API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrainBoost_API.Repositories.Inplementation
 {
@@ -30,6 +31,28 @@ namespace BrainBoost_API.Repositories.Inplementation
                 return crsDetails;
             }         
             return new CourseDetails();
+        }
+        public IEnumerable<Course> GetFilteredCourses(CourseFilterationDto filter , string? includeProps = null)
+        {
+            IQueryable<Course> courses = GetAll(includeProps).AsQueryable();
+            if (!string.IsNullOrEmpty(filter.CategoryName))
+            {
+                courses = courses.Where(c => c.Category.Name == filter.CategoryName);
+            }
+            if (filter.Price != null){
+                courses = courses.Where(c => c.Price == filter.Price);
+            }
+            if (filter.Rate != null)
+            {
+                courses = courses.Where(c => c.Rate == filter.Rate);
+            }
+            var filteredCourses = courses.ToList();
+            return filteredCourses;
+        }
+        public IEnumerable<Course> SearchCourses(string searchString , string? includeProps = null)
+        {
+            return GetAll(includeProps).Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString)
+                    || c.Teacher.Fname.Contains(searchString) || c.Teacher.Lname.Contains(searchString) ).ToList();
         }
     }
 }
