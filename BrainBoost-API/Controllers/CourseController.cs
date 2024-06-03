@@ -1,4 +1,5 @@
-﻿using BrainBoost_API.DTOs.Account;
+﻿using AutoMapper;
+using BrainBoost_API.DTOs.Account;
 using BrainBoost_API.DTOs.Course;
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
@@ -15,12 +16,14 @@ namespace BrainBoost_API.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        public readonly UserManager<ApplicationUser> UserManager;
+        private readonly UserManager<ApplicationUser> UserManager;
         private readonly IUnitOfWork UnitOfWork;
-        public CourseController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IConfiguration configuration)
+        private readonly IMapper mapper;
+        public CourseController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IConfiguration configuration , IMapper mapper)
         {
             this.UserManager = userManager;
             this.UnitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
         [HttpGet("GetCourses")]
         public async Task<IActionResult> GetCourses()
@@ -61,6 +64,44 @@ namespace BrainBoost_API.Controllers
                 return Ok(NewCourse);
             }
             return BadRequest(ModelState);
+        }
+       
+        [HttpGet("GetAllCoursesAsCards")]
+        public ActionResult<List<CourseCardDataDto>> GetAllCoursesAsCards()
+        {
+            List<Course> courses = UnitOfWork.CourseRepository.GetAll().ToList();
+            List<CourseCardDataDto> courseCards = new List<CourseCardDataDto>();
+            foreach (Course course in courses) {
+                CourseCardDataDto currentCourseCard = mapper.Map<CourseCardDataDto>(course);
+                courseCards.Add(currentCourseCard);
+            }
+            return Ok(courseCards);
+        }
+
+        [HttpGet("GetFilteredCourses")]
+        public ActionResult<List<CourseCardDataDto>> GetFilteredCourses([FromQuery] CourseFilterationDto filter)
+        {
+            List<Course> courses = UnitOfWork.CourseRepository.GetFilteredCourses(filter ,null).ToList();
+            List<CourseCardDataDto> filteredCourseCards = new List<CourseCardDataDto>();
+            foreach (Course course in courses)
+            {
+                CourseCardDataDto currentCourseCard =  mapper.Map<CourseCardDataDto>(course);
+                filteredCourseCards.Add(currentCourseCard);
+            }
+            return Ok(filteredCourseCards);
+        }
+
+        [HttpGet("GetSearchedCourses")]
+        public ActionResult<List<CourseCardDataDto>> GetSearchedCourses([FromQuery] string searchString)
+        {
+            List<Course> courses = UnitOfWork.CourseRepository.SearchCourses(searchString, null).ToList();
+            List<CourseCardDataDto> searchCourseCards = new List<CourseCardDataDto>();
+            foreach (Course course in courses)
+            {
+                CourseCardDataDto currentCourseCard = mapper.Map<CourseCardDataDto>(course);
+                searchCourseCards.Add(currentCourseCard);
+            }
+            return Ok(searchCourseCards);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace BrainBoost_API.Mapper
             CreateMap<ReviewDTO, Review>().ReverseMap();
             CreateMap<WhatToLearnDTO, WhatToLearn>().ReverseMap();
             CreateMap<EnrollmentDto, Enrollment>().ReverseMap();
+            CreateMap<Course, CourseCardDataDto>();
 
         }
     }
