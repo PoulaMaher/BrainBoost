@@ -68,7 +68,7 @@ namespace BrainBoost_API.Controllers
        
         [HttpGet("GetAllCoursesAsCards")]
         public ActionResult<List<CourseCardDataDto>> GetAllCoursesAsCards()
-        {
+        { 
             List<Course> courses = UnitOfWork.CourseRepository.GetAll().ToList();
             List<CourseCardDataDto> courseCards = new List<CourseCardDataDto>();
             foreach (Course course in courses) {
@@ -80,7 +80,7 @@ namespace BrainBoost_API.Controllers
 
         [HttpGet("GetFilteredCourses")]
         public ActionResult<List<CourseCardDataDto>> GetFilteredCourses([FromQuery] CourseFilterationDto filter)
-        {
+        { 
             List<Course> courses = UnitOfWork.CourseRepository.GetFilteredCourses(filter ,null).ToList();
             List<CourseCardDataDto> filteredCourseCards = new List<CourseCardDataDto>();
             foreach (Course course in courses)
@@ -93,7 +93,7 @@ namespace BrainBoost_API.Controllers
 
         [HttpGet("GetSearchedCourses")]
         public ActionResult<List<CourseCardDataDto>> GetSearchedCourses([FromQuery] string searchString)
-        {
+        { 
             List<Course> courses = UnitOfWork.CourseRepository.SearchCourses(searchString, null).ToList();
             List<CourseCardDataDto> searchCourseCards = new List<CourseCardDataDto>();
             foreach (Course course in courses)
