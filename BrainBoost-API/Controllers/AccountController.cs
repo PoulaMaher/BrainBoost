@@ -31,7 +31,7 @@ namespace BrainBoost_API.Controllers
         [HttpPost("register")]
 
         public async Task<IActionResult> Register(RegisterUserDto registerUser, string role)
-        {
+        { 
             if (ModelState.IsValid)
             {
                 if (!await RoleManager.RoleExistsAsync(role))
