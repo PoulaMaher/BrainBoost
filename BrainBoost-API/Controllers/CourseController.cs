@@ -51,6 +51,35 @@ namespace BrainBoost_API.Controllers
             }
             return BadRequest(ModelState);
         }
+
+        [HttpGet("GetCourseContent/{id:int}")]
+        public async Task<IActionResult> GetCourseContent(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                
+
+                // Step 1: Retrieve the course with its related entities
+                var Course = UnitOfWork.CourseRepository.Get(c => c.Id == id, "Teacher,WhatToLearn,videos,quiz");
+
+                // Step 2: Retrieve the quiz associated with the course
+                var quizId = Course.quiz.Id;
+
+                // Step 3: Retrieve the list of quiz questions associated with the quiz
+                var quizQuestions = UnitOfWork.QuizRepository.GetList(r => r.Id == quizId, "QuizQuestions")
+                                                             .SelectMany(q => q.QuizQuestions) 
+                                                             .ToList();
+
+                // Step 4: Retrieve the actual questions from the question repository using the IDs of the quiz questions
+                var questionIds = quizQuestions.Select(q => q.QuestionId).ToList();
+                var questions = UnitOfWork.QuestionRepository.GetList(r => questionIds.Contains(r.Id)).ToList();
+
+                // Now `questions` contains the list of questions associated with the quiz
+
+                return Ok(questions);
+            }
+            return BadRequest(ModelState);
+        }
         [HttpPost("AddCourse")]
         public async Task<IActionResult> AddCourse(Course NewCourse)
         {

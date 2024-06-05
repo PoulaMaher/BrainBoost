@@ -14,7 +14,7 @@ namespace BrainBoost_API.Models
         public int CourseId { get; set; }
 
         public Course? Course { get; set; }
-        public List<Question>? Questions { get; set; }
+        public List<QuizQuesitons>? QuizQuestions { get; set; }
 
     }
 }

@@ -12,9 +12,8 @@ namespace BrainBoost_API.Models
         public bool IsDeleted { get; set; } 
         [ForeignKey("TrueAnswer")]
         public int TrueAnswerId { get; set; }
-
         public Answer? TrueAnswer { get; set; }
         public List<Answer>? Answers { get; set; }
-        public List<Quiz>? Quizzes { get; set; }
+        public List<QuizQuesitons>? QuizQuesiton { get; set; }
     }
 }

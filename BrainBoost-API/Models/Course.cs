@@ -21,6 +21,9 @@ namespace BrainBoost_API.Models
 
         public Teacher? Teacher { get; set; }
         public Category? Category { get; set; }
+        public List<Video> ?videos { get; set; }
+        public Quiz? quiz { get; set; }
+       
         public List<WhatToLearn>? WhatToLearn { get; set; }
         public List<StudentEnrolledCourses>? EnrolledCourses { get; set; }
         public List<StudentSavedCourses>? SavedCourses { get; set; }
