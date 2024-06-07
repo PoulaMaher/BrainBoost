@@ -33,11 +33,11 @@
                 .HasMany(q => q.Answers)
                 .WithOne(a => a.Question)
                 .HasForeignKey(a => a.QuestionId);
-                builder.Entity<Question>()
-                .HasOne(q => q.TrueAnswer)
-                .WithMany()
-                .HasForeignKey(q => q.TrueAnswerId)
-                .OnDelete(DeleteBehavior.NoAction);
+                //builder.Entity<Question>()
+                //.HasOne(q => q.TrueAnswer)
+                //.WithMany()
+                //.HasForeignKey(q => q.TrueAnswerId)
+                //.OnDelete(DeleteBehavior.NoAction);
             //////not returning
 
             //foreach (var model in builder.Model.GetEntityTypes())
