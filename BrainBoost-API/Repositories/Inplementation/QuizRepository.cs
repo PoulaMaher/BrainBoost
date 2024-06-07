@@ -1,13 +1,34 @@
-﻿using BrainBoost_API.Models;
+﻿using AutoMapper;
+using BrainBoost_API.DTOs.Course;
+using BrainBoost_API.DTOs.Question;
+using BrainBoost_API.DTOs.Quiz;
+using BrainBoost_API.Models;
 
 namespace BrainBoost_API.Repositories.Inplementation
 {
     public class QuizRepository : Repository<Quiz> , IQuizRepository
     {
         private readonly ApplicationDbContext Context;
-        public QuizRepository(ApplicationDbContext context) : base(context)
+        private readonly IMapper mapper;
+
+        public QuizRepository(ApplicationDbContext context,IMapper mapper) : base(context)
         {
             this.Context = context;
+            this.mapper = mapper;
+        }
+        public QuizDTO getCrsQuiz(Quiz quiz,IEnumerable<Question> question)
+        {
+            QuizDTO q=null;
+            try
+            {
+                 q = mapper.Map<QuizDTO>(quiz);
+                q.Question = mapper.Map<IEnumerable<QuestionDTO>>(question).ToList();
+            }
+            catch (Exception ex) { 
+            }
+           
+            return q;
+
         }
     }
 }
