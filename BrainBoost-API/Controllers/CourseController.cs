@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BrainBoost_API.DTOs.Account;
 using BrainBoost_API.DTOs.Course;
+using BrainBoost_API.DTOs.Quiz;
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +55,26 @@ namespace BrainBoost_API.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpGet("GetCourseQuiz/{id:int}")]
+        public async Task<IActionResult> GetCourseQuiz(int id)
+        {
+            if (ModelState.IsValid)
+            {
+
+               
+                var Course = UnitOfWork.CourseRepository.Get(c => c.Id == id, "Teacher,WhatToLearn,videos,quiz");
+               
+                var quiz = Course.quiz;
+                var quizQuestions = UnitOfWork.QuizRepository.Get(c => c.Id == quiz.Id, "Questions").Questions;              
+                var questionIds = quizQuestions.Select(q => q.QuestionId).ToList();
+                var questions = UnitOfWork.QuestionRepository.GetList(r => questionIds.Contains(r.Id), "Answers").ToList();
+             
+                 QuizDTO TakenQuiz = UnitOfWork.QuizRepository.getCrsQuiz(quiz,questions);
+
+                return Ok(TakenQuiz);
+            }
+            return BadRequest(ModelState);
+        }
         [HttpPost("AddCourse")]
         public async Task<IActionResult> AddCourse(Course NewCourse)
         {
@@ -103,5 +124,8 @@ namespace BrainBoost_API.Controllers
             }
             return Ok(searchCourseCards);
         }
+
+       
+
     }
 }
