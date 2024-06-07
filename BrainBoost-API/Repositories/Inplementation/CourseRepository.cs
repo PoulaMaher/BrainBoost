@@ -39,14 +39,22 @@ namespace BrainBoost_API.Repositories.Inplementation
             {
                 courses = courses.Where(c => c.Category.Name == filter.CategoryName);
             }
-            if (filter.Price != null){
-                courses = courses.Where(c => c.Price == filter.Price);
+            if (filter.Price != -1){
+                if(filter.Price == 0)
+                {
+                    courses = courses.Where(c => c.Price == filter.Price);
+                }
+                if(filter.Price > 0)
+                {
+                    courses = courses.Where(c => c.Price >= filter.Price);
+                }
             }
-            if (filter.Rate != null)
+            if (filter.Rate != -1)
             {
                 courses = courses.Where(c => c.Rate == filter.Rate);
             }
-            var filteredCourses = courses.ToList();
+            var filteredCourses = new List<Course>();
+            filteredCourses = courses.ToList();
             return filteredCourses;
         }
         public IEnumerable<Course> SearchCourses(string searchString , string? includeProps = null)

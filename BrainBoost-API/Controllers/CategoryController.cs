@@ -15,13 +15,24 @@ namespace BrainBoost_API.Controllers
         {
             this.CategoryRepository = CategoryRepository;
         }
-        [HttpGet("GetCategory")]
-        public async Task<IActionResult> GetCategory()
+        [HttpGet("GetAllCategories")]
+        public async Task<IActionResult> GetAllCategories()
         {
             if (ModelState.IsValid)
             {
                 List<Category> Categories = CategoryRepository.GetAll().ToList();
                 return Ok(Categories);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("GetCategory")]
+        public IActionResult GetCategory(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                Category category = CategoryRepository.Get(c => c.Id == id);
+                return Ok(category);
             }
             return BadRequest(ModelState);
         }
