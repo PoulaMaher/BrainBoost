@@ -7,6 +7,6 @@ namespace BrainBoost_API.Repositories.Inplementation
     {
         CourseDetails getCrsDetails(Course crs,List<Review> review);
         IEnumerable<Course> GetFilteredCourses(CourseFilterationDto filter, string? includeProps);
-        IEnumerable<Course> SearchCourses(string searchString, string? includeProps);
+        List<Course> SearchCourses(string searchString, string? includeProps);
     }
 }

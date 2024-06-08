@@ -73,7 +73,7 @@ namespace BrainBoost_API.Repositories.Inplementation
             DbSet.UpdateRange(entities);
         }
 
-       
+  
 
          public void update(T entity)
         {
