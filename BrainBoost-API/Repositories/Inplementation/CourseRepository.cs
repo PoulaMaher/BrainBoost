@@ -54,5 +54,17 @@ namespace BrainBoost_API.Repositories.Inplementation
             return GetAll(includeProps).Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString)
                     || c.Teacher.Fname.Contains(searchString) || c.Teacher.Lname.Contains(searchString) ).ToList();
         }
+        public CertificateDTO getCrsCertificate(Course crs ,string s)
+        {
+            if (crs != null) 
+            {
+                var cert = mapper.Map<CertificateDTO>(crs);
+                cert.StdName = s;
+                return cert;
+                  
+            }
+            return new CertificateDTO();
+
+        }
     }
 }

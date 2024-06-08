@@ -8,13 +8,13 @@ namespace BrainBoost_API.Models
         public int NumOfQuestions { get; set; }
         public int Degree { get; set; }
         public int MinDegree { get; set; }
-        public bool IsDeleted { get; set; } 
+        public bool IsDeleted { get; set; }
 
         [ForeignKey("Course")]
         public int CourseId { get; set; }
 
         public Course? Course { get; set; }
-        public List<Question>? Questions { get; set; }
+        public List<QuizQuesitons>? Questions { get; set; }
 
     }
 }

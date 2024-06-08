@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BrainBoost_API.DTOs.Account;
 using BrainBoost_API.DTOs.Course;
+using BrainBoost_API.DTOs.Quiz;
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +55,31 @@ namespace BrainBoost_API.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpGet("GetCourseQuiz/{id:int}")]
+        public async Task<IActionResult> GetCourseQuiz(int id)
+        
+        {
+            if (ModelState.IsValid)
+            {
+
+                string UserID = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Student std=UnitOfWork.StudentRepository.Get(c=>c.UserId==UserID);
+                
+               var enrolledCourse= UnitOfWork.StudentEnrolledCoursesRepository.Get(c => c.StudentId == std.Id && c.CourseId == id);
+                bool IsTaken = enrolledCourse.QuizState;
+                var Course = UnitOfWork.CourseRepository.Get(c => c.Id == id, "Teacher,WhatToLearn,videos,quiz");
+               
+                var quiz = Course.quiz;
+                var quizQuestions = UnitOfWork.QuizRepository.Get(c => c.Id == quiz.Id, "Questions").Questions;              
+                var questionIds = quizQuestions.Select(q => q.QuestionId).ToList();
+                var questions = UnitOfWork.QuestionRepository.GetList(r => questionIds.Contains(r.Id), "Answers").ToList();
+             
+                 QuizDTO TakenQuiz = UnitOfWork.QuizRepository.getCrsQuiz(quiz,questions,IsTaken);
+
+                return Ok(TakenQuiz);
+            }
+            return BadRequest(ModelState);
+        }
         [HttpPost("AddCourse")]
         public async Task<IActionResult> AddCourse(Course NewCourse)
         {
@@ -103,5 +129,22 @@ namespace BrainBoost_API.Controllers
             }
             return Ok(searchCourseCards);
         }
+
+        [HttpGet("GetCertificate/{id:int}")]
+        
+        public async Task<IActionResult> GetCertificate(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string UserID = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var std=UnitOfWork.StudentRepository.Get(c=>c.UserId==UserID);
+                 var name = std.Fname + std.Lname;
+                var course = UnitOfWork.CourseRepository.Get(c => c.Id == id);
+                var cert=UnitOfWork.CourseRepository.getCrsCertificate(course, name);
+                return Ok(cert);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }

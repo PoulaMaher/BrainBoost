@@ -33,6 +33,9 @@ namespace BrainBoost_API.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -339,15 +342,10 @@ namespace BrainBoost_API.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<int>("TrueAnswerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TrueAnswerId");
 
                     b.ToTable("Questions");
                 });
@@ -379,7 +377,8 @@ namespace BrainBoost_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseId")
+                        .IsUnique();
 
                     b.ToTable("Quizzes");
                 });
@@ -393,7 +392,9 @@ namespace BrainBoost_API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
@@ -493,6 +494,9 @@ namespace BrainBoost_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("CertificateState")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -500,6 +504,9 @@ namespace BrainBoost_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
+
+                    b.Property<bool>("QuizState")
+                        .HasColumnType("bit");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -611,6 +618,29 @@ namespace BrainBoost_API.Migrations
                     b.HasIndex("CrsId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.VideoState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("StudentEnrolledCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentEnrolledCourseId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("videoStates");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.WhatToLearn", b =>
@@ -791,21 +821,6 @@ namespace BrainBoost_API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("QuestionQuiz", b =>
-                {
-                    b.Property<int>("QuestionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuizzesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuestionsId", "QuizzesId");
-
-                    b.HasIndex("QuizzesId");
-
-                    b.ToTable("QuestionQuiz");
-                });
-
             modelBuilder.Entity("BrainBoost_API.Models.Answer", b =>
                 {
                     b.HasOne("BrainBoost_API.Models.Question", "Question")
@@ -853,22 +868,11 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("BrainBoost_API.Models.Question", b =>
-                {
-                    b.HasOne("BrainBoost_API.Models.Answer", "TrueAnswer")
-                        .WithMany()
-                        .HasForeignKey("TrueAnswerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("TrueAnswer");
-                });
-
             modelBuilder.Entity("BrainBoost_API.Models.Quiz", b =>
                 {
                     b.HasOne("BrainBoost_API.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
+                        .WithOne("quiz")
+                        .HasForeignKey("BrainBoost_API.Models.Quiz", "CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -878,13 +882,13 @@ namespace BrainBoost_API.Migrations
             modelBuilder.Entity("BrainBoost_API.Models.QuizQuesitons", b =>
                 {
                     b.HasOne("BrainBoost_API.Models.Question", "Question")
-                        .WithMany()
+                        .WithMany("Quizzes")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BrainBoost_API.Models.Quiz", "Quiz")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -976,12 +980,31 @@ namespace BrainBoost_API.Migrations
             modelBuilder.Entity("BrainBoost_API.Models.Video", b =>
                 {
                     b.HasOne("BrainBoost_API.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("videos")
                         .HasForeignKey("CrsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.VideoState", b =>
+                {
+                    b.HasOne("BrainBoost_API.Models.StudentEnrolledCourses", "StudentEnrolledCourses")
+                        .WithMany("videoStates")
+                        .HasForeignKey("StudentEnrolledCourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BrainBoost_API.Models.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StudentEnrolledCourses");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.WhatToLearn", b =>
@@ -1065,21 +1088,6 @@ namespace BrainBoost_API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("QuestionQuiz", b =>
-                {
-                    b.HasOne("BrainBoost_API.Models.Question", null)
-                        .WithMany()
-                        .HasForeignKey("QuestionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BrainBoost_API.Models.Quiz", null)
-                        .WithMany()
-                        .HasForeignKey("QuizzesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BrainBoost_API.Models.Category", b =>
                 {
                     b.Navigation("Courses");
@@ -1092,11 +1100,22 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("SavedCourses");
 
                     b.Navigation("WhatToLearn");
+
+                    b.Navigation("quiz");
+
+                    b.Navigation("videos");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.Question", b =>
                 {
                     b.Navigation("Answers");
+
+                    b.Navigation("Quizzes");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.Quiz", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.Student", b =>
@@ -1106,6 +1125,11 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("FollowedTeachers");
 
                     b.Navigation("SavedCourses");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.StudentEnrolledCourses", b =>
+                {
+                    b.Navigation("videoStates");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.Teacher", b =>

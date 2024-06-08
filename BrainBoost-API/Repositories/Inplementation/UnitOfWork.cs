@@ -29,7 +29,7 @@ namespace BrainBoost_API.Repositories.Inplementation
         {
             this.Context = context;
             VideoRepository = new VideoRepository(context);
-            QuizRepository = new QuizRepository(context);
+            QuizRepository = new QuizRepository(context,mapper);
             StudentRepository = new StudentRepository(context);
             CourseRepository = new CourseRepository(context,mapper);
             TeacherRepository = new TeacherRepository(context);
