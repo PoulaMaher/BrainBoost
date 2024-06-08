@@ -115,7 +115,7 @@ namespace BrainBoost_API.Controllers
         [HttpGet("GetSearchedCourses")]
         public ActionResult<List<CourseCardDataDto>> GetSearchedCourses([FromQuery] string searchString)
         { 
-            List<Course> courses = UnitOfWork.CourseRepository.SearchCourses(searchString, null).ToList();
+            List<Course> courses = UnitOfWork.CourseRepository.SearchCourses(searchString, "Teacher");
             List<CourseCardDataDto> searchCourseCards = new List<CourseCardDataDto>();
             foreach (Course course in courses)
             {

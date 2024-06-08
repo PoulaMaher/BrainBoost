@@ -57,10 +57,20 @@ namespace BrainBoost_API.Repositories.Inplementation
             filteredCourses = courses.ToList();
             return filteredCourses;
         }
-        public IEnumerable<Course> SearchCourses(string searchString , string? includeProps = null)
+        public List<Course> SearchCourses(string searchString , string? includeProps)
         {
-            return GetAll(includeProps).Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString)
-                    || c.Teacher.Fname.Contains(searchString) || c.Teacher.Lname.Contains(searchString) ).ToList();
+            var courses = GetList(c => c.Name.Contains(searchString) || c.Description.Contains(searchString)
+                            || c.Teacher.Fname.Contains(searchString) || c.Teacher.Lname.Contains(searchString), includeProps);
+                            
+
+            if (courses != null)
+            {
+                return courses.ToList() ;
+            }
+            else
+            {
+                return new List<Course>();
+            }
         }
     }
 }
