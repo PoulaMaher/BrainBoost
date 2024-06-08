@@ -4,6 +4,7 @@ namespace BrainBoost_API.DTOs.Course
 {
     public class CourseCardDataDto
     {
+        public int Id { get; set; }
         public string? Name { get; set; }
         public string? photoUrl { get; set; }
         public int Price { get; set; }

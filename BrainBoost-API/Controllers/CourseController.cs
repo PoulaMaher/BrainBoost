@@ -57,7 +57,7 @@ namespace BrainBoost_API.Controllers
         }
         [HttpGet("GetCourseQuiz/{id:int}")]
         public async Task<IActionResult> GetCourseQuiz(int id)
-        
+
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +67,7 @@ namespace BrainBoost_API.Controllers
                 
                var enrolledCourse= UnitOfWork.StudentEnrolledCoursesRepository.Get(c => c.StudentId == std.Id && c.CourseId == id);
                 bool IsTaken = enrolledCourse.QuizState;
+               
                 var Course = UnitOfWork.CourseRepository.Get(c => c.Id == id, "Teacher,WhatToLearn,videos,quiz");
                
                 var quiz = Course.quiz;
@@ -107,7 +108,7 @@ namespace BrainBoost_API.Controllers
         [HttpGet("GetFilteredCourses")]
         public ActionResult<List<CourseCardDataDto>> GetFilteredCourses([FromQuery] CourseFilterationDto filter)
         { 
-            List<Course> courses = UnitOfWork.CourseRepository.GetFilteredCourses(filter ,null).ToList();
+            List<Course> courses = UnitOfWork.CourseRepository.GetFilteredCourses(filter ,"Category").ToList();
             List<CourseCardDataDto> filteredCourseCards = new List<CourseCardDataDto>();
             foreach (Course course in courses)
             {
@@ -120,7 +121,7 @@ namespace BrainBoost_API.Controllers
         [HttpGet("GetSearchedCourses")]
         public ActionResult<List<CourseCardDataDto>> GetSearchedCourses([FromQuery] string searchString)
         { 
-            List<Course> courses = UnitOfWork.CourseRepository.SearchCourses(searchString, null).ToList();
+            List<Course> courses = UnitOfWork.CourseRepository.SearchCourses(searchString, "Teacher");
             List<CourseCardDataDto> searchCourseCards = new List<CourseCardDataDto>();
             foreach (Course course in courses)
             {
