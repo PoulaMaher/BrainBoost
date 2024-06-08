@@ -23,8 +23,9 @@
             public DbSet<Answer> Answers { get; set; }
             public DbSet<Question> Questions { get; set; }
             public DbSet<WhatToLearn> WhatToLearn { get; set; }
+            public DbSet<VideoState> videoStates { get; set; }
 
-            public DbSet<StudentEnrolledCourses> StudentEnrolledCourses { get; set; }
+        public DbSet<StudentEnrolledCourses> StudentEnrolledCourses { get; set; }
             public DbSet<StudentSavedCourses> StudentSavedCourses { get; set; }
             protected override void OnModelCreating(ModelBuilder builder)
             {

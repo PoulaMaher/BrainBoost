@@ -8,6 +8,7 @@ namespace BrainBoost_API.DTOs.Quiz
         public int Id { get; set; }
         public int NumOfQuestions { get; set; }
         public int Degree { get; set; }
+        public bool QuizState { get; set; }
         public int MinDegree { get; set; }
         public bool IsDeleted { get; set; }      
         public int CourseId { get; set; }

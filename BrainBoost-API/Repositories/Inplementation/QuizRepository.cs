@@ -16,13 +16,14 @@ namespace BrainBoost_API.Repositories.Inplementation
             this.Context = context;
             this.mapper = mapper;
         }
-        public QuizDTO getCrsQuiz(Quiz quiz,IEnumerable<Question> question)
+        public QuizDTO getCrsQuiz(Quiz quiz,IEnumerable<Question> question, bool IsTaken)
         {
             QuizDTO q=null;
             try
             {
                  q = mapper.Map<QuizDTO>(quiz);
                 q.Question = mapper.Map<IEnumerable<QuestionDTO>>(question).ToList();
+                q.QuizState = IsTaken;
             }
             catch (Exception ex) { 
             }

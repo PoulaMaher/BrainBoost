@@ -1,8 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\BrainBoost\\BrainBoost-API\\",
+  "WorkspaceRootPath": "F:\\BBTest\\BrainBoost-API\\",
   "Documents": [
     {
+<<<<<<< HEAD
+      "AbsoluteMoniker": "D:0:0:{6F2CEB32-4EA4-4C38-B49C-CA6181E624D2}|BrainBoost-API\\BrainBoost-API.csproj|f:\\bbtest\\brainboost-api\\brainboost-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6F2CEB32-4EA4-4C38-B49C-CA6181E624D2}|BrainBoost-API\\BrainBoost-API.csproj|solutionrelative:brainboost-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+=======
       "AbsoluteMoniker": "D:0:0:{6F2CEB32-4EA4-4C38-B49C-CA6181E624D2}|BrainBoost-API\\BrainBoost-API.csproj|f:\\brainboost\\brainboost-api\\brainboost-api\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6F2CEB32-4EA4-4C38-B49C-CA6181E624D2}|BrainBoost-API\\BrainBoost-API.csproj|solutionrelative:brainboost-api\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -120,6 +124,7 @@
     {
       "AbsoluteMoniker": "D:0:0:{6F2CEB32-4EA4-4C38-B49C-CA6181E624D2}|BrainBoost-API\\BrainBoost-API.csproj|f:\\brainboost\\brainboost-api\\brainboost-api\\migrations\\20240606180240_coursequiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6F2CEB32-4EA4-4C38-B49C-CA6181E624D2}|BrainBoost-API\\BrainBoost-API.csproj|solutionrelative:brainboost-api\\migrations\\20240606180240_coursequiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> 756686e55193e3b79a7e14c5469c3d8f252f42cd
     }
   ],
   "DocumentGroupContainers": [
@@ -129,7 +134,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
+          "SelectedChildIndex": 3,
+=======
           "SelectedChildIndex": 10,
+>>>>>>> 756686e55193e3b79a7e14c5469c3d8f252f42cd
           "Children": [
             {
               "$type": "Bookmark",
@@ -145,6 +154,17 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\appsettings.json",
+              "RelativeDocumentMoniker": "BrainBoost-API\\appsettings.json",
+              "ToolTip": "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\appsettings.json",
+              "RelativeToolTip": "BrainBoost-API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-08T22:03:07.292Z",
+=======
               "DocumentIndex": 2,
               "Title": "Video.cs",
               "DocumentMoniker": "F:\\BrainBoost\\BrainBoost-API\\BrainBoost-API\\Models\\Video.cs",
@@ -254,11 +274,14 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-06T16:32:02.558Z",
+>>>>>>> 756686e55193e3b79a7e14c5469c3d8f252f42cd
               "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+<<<<<<< HEAD
+=======
             },
             {
               "$type": "Document",
@@ -510,6 +533,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-02T15:45:01.648Z"
+>>>>>>> 756686e55193e3b79a7e14c5469c3d8f252f42cd
             }
           ]
         }

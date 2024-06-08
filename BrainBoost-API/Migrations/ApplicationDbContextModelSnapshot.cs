@@ -494,6 +494,9 @@ namespace BrainBoost_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("CertificateState")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -501,6 +504,9 @@ namespace BrainBoost_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
+
+                    b.Property<bool>("QuizState")
+                        .HasColumnType("bit");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -612,6 +618,29 @@ namespace BrainBoost_API.Migrations
                     b.HasIndex("CrsId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.VideoState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("StudentEnrolledCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentEnrolledCourseId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("videoStates");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.WhatToLearn", b =>
@@ -959,6 +988,25 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("BrainBoost_API.Models.VideoState", b =>
+                {
+                    b.HasOne("BrainBoost_API.Models.StudentEnrolledCourses", "StudentEnrolledCourses")
+                        .WithMany("videoStates")
+                        .HasForeignKey("StudentEnrolledCourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BrainBoost_API.Models.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StudentEnrolledCourses");
+
+                    b.Navigation("Video");
+                });
+
             modelBuilder.Entity("BrainBoost_API.Models.WhatToLearn", b =>
                 {
                     b.HasOne("BrainBoost_API.Models.Course", "course")
@@ -1077,6 +1125,11 @@ namespace BrainBoost_API.Migrations
                     b.Navigation("FollowedTeachers");
 
                     b.Navigation("SavedCourses");
+                });
+
+            modelBuilder.Entity("BrainBoost_API.Models.StudentEnrolledCourses", b =>
+                {
+                    b.Navigation("videoStates");
                 });
 
             modelBuilder.Entity("BrainBoost_API.Models.Teacher", b =>

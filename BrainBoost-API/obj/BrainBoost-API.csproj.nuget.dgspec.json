@@ -1,6 +1,22 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
+    "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\BrainBoost-API.csproj": {}
+  },
+  "projects": {
+    "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\BrainBoost-API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\BrainBoost-API.csproj",
+        "projectName": "BrainBoost-API",
+        "projectPath": "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\BrainBoost-API.csproj",
+        "packagesPath": "C:\\Users\\Osama\\.nuget\\packages\\",
+        "outputPath": "F:\\BBTest\\BrainBoost-API\\BrainBoost-API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Osama\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
     "E:\\ITI\\ITI Projects\\Graduation Project\\BrainBoost-API\\BrainBoost-API\\BrainBoost-API.csproj": {}
   },
   "projects": {
@@ -20,6 +36,7 @@
         "configFilePaths": [
           "C:\\Users\\Polpol\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+>>>>>>> 756686e55193e3b79a7e14c5469c3d8f252f42cd
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +56,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -111,7 +133,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
