@@ -15,8 +15,8 @@ namespace BrainBoost_API.Controllers
         {
             this.CategoryRepository = CategoryRepository;
         }
-        [HttpGet("GetCategory")]
-        public async Task<IActionResult> GetCategory()
+        [HttpGet("GetAllCategories")]
+        public async Task<IActionResult> GetAllCategories()
         {
             if (ModelState.IsValid)
             {

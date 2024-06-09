@@ -4,12 +4,15 @@ using BrainBoost_API.DTOs.Subscription;
 using BrainBoost_API.Models;
 using BrainBoost_API.Repositories.Inplementation;
 using HelperPlan.DTO.Paylink;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Security.Claims;
 
 namespace BrainBoost_API.Controllers
 {
@@ -41,7 +44,8 @@ namespace BrainBoost_API.Controllers
             if (ModelState.IsValid)
             {
 
-                enrollmentDto.StudentId = 1;//int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                string userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                enrollmentDto.StudentId = unitOfWork.StudentRepository.Get(c => c.UserId == userId).Id;
                 var orderNumber = Guid.NewGuid().ToString();
 
                 var result = await GeneratePaylink(await AuthenticationPaylink(), enrollmentDto, orderNumber);
@@ -52,7 +56,7 @@ namespace BrainBoost_API.Controllers
                 enrollment.CheckUrl = result.CheckUrl;
                 enrollment.orderNumber = orderNumber;
                 this.unitOfWork.EnrollmentRepository.add(enrollment);
-                //this.unitOfWork.save();
+                this.unitOfWork.save();
                 return Ok(new { Url = result.Url });
 
             }
@@ -116,11 +120,9 @@ namespace BrainBoost_API.Controllers
         public async Task<GatewayOrderResponse> GeneratePaylink(string token, EnrollmentDto enrollmentDto, string orderNumber)
         {
 
-            /*var studentId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var studentInfo = await user.FindByIdAsync(teacherId);
-            // unitOfWork.StudentId.Get(x => x.Id == enrollmentDto.StudentId);
-
-            var course = this.unitOfWork.CourseRepository.Get(x => x.Id == enrollmentDto.CourseId);*/
+            string studentId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var studentInfo = unitOfWork.StudentRepository.Get(c => c.UserId == studentId , "AppUser");
+            var course = this.unitOfWork.CourseRepository.Get(x => x.Id == enrollmentDto.CourseId);
 
             var options = new RestClientOptions(this.paylink.url + "/api/addInvoice");
             var client = new RestClient(options);
@@ -132,13 +134,13 @@ namespace BrainBoost_API.Controllers
             request.AddJsonBody(new
             {
 
-                amount = 100,//course.Price, //100.0,
-                clientMobile = 05156325333,// studentInfo.PhoneNumber,//"0512345678",
-                clientName = "poula",//string.Format("{0} {1}", studentInfo.Fname, studentInfo.Lname),
+                amount = course.Price, //100.0,
+                //clientMobile = 05156325333,// studentInfo.PhoneNumber,//"0512345678",
+                clientName = string.Format("{0} {1}", studentInfo.Fname, studentInfo.Lname),
                 //"Mohammed Ali",
-                clientEmail = "poual@gmail.com",//studentInfo.Email,//"mohammed@test.com",
+                clientEmail = studentInfo.AppUser.Email,//"mohammed@test.com",
 
-                orderNumber = "1236566256",//orderNumber,// "123456789",
+                orderNumber = orderNumber,// "123456789",
 
 
                 callBackUrl = $"http://localhost:4200/success/{orderNumber}",
@@ -151,8 +153,8 @@ namespace BrainBoost_API.Controllers
                     new
                     {
 
-                        title = "test",//course.Name,//"test",
-                        price =100.0,//course.Price,//100.0,
+                        title = course.Name,//"test",
+                        price =course.Price,//100.0,
                         qty = 1,
                         imageSrc = "",
                         description = "",

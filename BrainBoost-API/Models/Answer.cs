@@ -6,6 +6,7 @@ namespace BrainBoost_API.Models
     {
         public int Id { get; set; }
         public string? Content { get; set; }
+        public bool IsCorrect { get; set; }
 
         [ForeignKey("Question")]
         public int? QuestionId { get; set; }

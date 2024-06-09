@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BrainBoost_API.DTOs.Course;
 using BrainBoost_API.DTOs.Review;
 using BrainBoost_API.Models;
@@ -31,28 +31,57 @@ namespace BrainBoost_API.Repositories.Inplementation
                 return crsDetails;
             }         
             return new CourseDetails();
-        }
-        public IEnumerable<Course> GetFilteredCourses(CourseFilterationDto filter , string? includeProps = null)
+        } public IEnumerable<Course> GetFilteredCourses(CourseFilterationDto filter , string? includeProps = null)
         {
             IQueryable<Course> courses = GetAll(includeProps).AsQueryable();
             if (!string.IsNullOrEmpty(filter.CategoryName))
             {
                 courses = courses.Where(c => c.Category.Name == filter.CategoryName);
             }
-            if (filter.Price != null){
-                courses = courses.Where(c => c.Price == filter.Price);
+            if (filter.Price != -1){
+                if(filter.Price == 0)
+                {
+                    courses = courses.Where(c => c.Price == filter.Price);
+                }
+                if(filter.Price > 0)
+                {
+                    courses = courses.Where(c => c.Price >= filter.Price);
+                }
             }
-            if (filter.Rate != null)
+            if (filter.Rate != -1)
             {
                 courses = courses.Where(c => c.Rate == filter.Rate);
             }
-            var filteredCourses = courses.ToList();
+            var filteredCourses = new List<Course>();
+            filteredCourses = courses.ToList();
             return filteredCourses;
         }
-        public IEnumerable<Course> SearchCourses(string searchString , string? includeProps = null)
+         public List<Course> SearchCourses(string searchString , string? includeProps)
         {
-            return GetAll(includeProps).Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString)
-                    || c.Teacher.Fname.Contains(searchString) || c.Teacher.Lname.Contains(searchString) ).ToList();
+            var courses = GetList(c => c.Name.Contains(searchString) || c.Description.Contains(searchString)
+                            || c.Teacher.Fname.Contains(searchString) || c.Teacher.Lname.Contains(searchString), includeProps);
+                            
+
+            if (courses != null)
+            {
+                return courses.ToList() ;
+            }
+            else
+            {
+                return new List<Course>();
+            }
+        }
+        public CertificateDTO getCrsCertificate(Course crs ,string s)
+        {
+            if (crs != null) 
+            {
+                var cert = mapper.Map<CertificateDTO>(crs);
+                cert.StdName = s;
+                return cert;
+                  
+            }
+            return new CertificateDTO();
+
         }
     }
 }

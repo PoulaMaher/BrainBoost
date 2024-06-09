@@ -4,7 +4,7 @@ namespace BrainBoost_API.Models
 {
     public class Enrollment
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         [ForeignKey("Student")]
